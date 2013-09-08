@@ -33,6 +33,7 @@
         <activity
             android:name="ch.sebastianhaeni.contacts.detail.DetailActivity"
             android:label="@string/title_activity_detail"
+            android:icon="@drawable/ic_contact_picture"
             android:parentActivityName="ch.sebastianhaeni.contacts.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

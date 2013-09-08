@@ -38,7 +38,9 @@ public class ContactsPhoneStateListener extends PhoneStateListener {
 			DatabaseHelper myDbHelper = new DatabaseHelper(context);
 
 			try {
-				myDbHelper.openDataBase();
+				if (!myDbHelper.openDataBase()) {
+					return;
+				}
 				Person person = myDbHelper.getEmployeeByNumber(incomingNumber);
 				if (person != null) {
 					Log.d("CONTACTS", "Incoming: " + incomingNumber);

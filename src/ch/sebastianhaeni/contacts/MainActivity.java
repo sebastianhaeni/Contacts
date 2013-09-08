@@ -49,7 +49,9 @@ public class MainActivity extends ListActivity {
 		final List<Person> persons;
 
 		try {
-			_db.openDataBase();
+			if (!_db.openDataBase()) {
+				return;
+			}
 			persons = _db.getFavorites();
 		} catch (SQLException sqle) {
 			throw sqle;
@@ -158,6 +160,9 @@ public class MainActivity extends ListActivity {
 	protected void onResume() {
 		super.onResume();
 		if (((EditText) findViewById(R.id.txtSearch)).getText().toString().length() > 0) {
+			return;
+		}
+		if (_adapter == null) {
 			return;
 		}
 		_adapter.clear();

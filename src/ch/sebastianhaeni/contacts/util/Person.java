@@ -30,9 +30,9 @@ public class Person {
 	private String _function;
 	private String _department;
 
-	public Person(String id, String firstname, String lastname, String email, String company, String phone, String mobilePhone,
-			String site, String building, String floor, String room, String language, boolean manager, boolean external, String deputy,
-			String address, String street, String mailbox, String zip, String city, String country, String function, String department) {
+	public Person(String id, String firstname, String lastname, String email, String company, String phone, String mobilePhone, String site, String building,
+			String floor, String room, String language, boolean manager, boolean external, String deputy, String address, String street, String mailbox,
+			String zip, String city, String country, String function, String department) {
 		_id = id;
 		_firstname = firstname;
 		_lastname = lastname;

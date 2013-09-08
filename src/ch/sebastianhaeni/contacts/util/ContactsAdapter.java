@@ -23,7 +23,6 @@ public class ContactsAdapter extends ArrayAdapter<Person> {
 	@Override
 	public int getViewTypeCount() {
 		return RowType.values().length;
-
 	}
 
 	@Override

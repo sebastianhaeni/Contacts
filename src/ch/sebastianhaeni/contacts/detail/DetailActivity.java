@@ -52,7 +52,9 @@ public class DetailActivity extends ListActivity {
 		_db = DatabaseHelper.getInstance(this);
 
 		try {
-			_db.openDataBase();
+			if (!_db.openDataBase()) {
+				return;
+			}
 			Person person = _db.getEmployee(personId);
 			_person = person;
 			setTitle(person.getFullname());
