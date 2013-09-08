@@ -1,5 +1,4 @@
-bin/*
-gen/*
+
 
 #################
 ## Eclipse
@@ -9,6 +8,7 @@ gen/*
 .project
 .metadata
 bin/
+gen/
 tmp/
 *.tmp
 *.bak
