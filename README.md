@@ -2,6 +2,7 @@ Contacts
 ========
 
 Contacts app for Android
+
 I created this app for myself, because I work at large company, and having all contacts in my Google Contacts is not the way to go for me.
 So now I can pull data from our employee directory and put them into a SQLite database and use it on my phone.
 
