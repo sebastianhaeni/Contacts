@@ -68,6 +68,7 @@ public class MainActivity extends ListActivity {
 				startActivity(intent);
 			}
 		});
+
 		getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -78,6 +79,7 @@ public class MainActivity extends ListActivity {
 						public void onClick(DialogInterface dialog, int buttonId) {
 						}
 					});
+
 					dialog.setButton(DialogInterface.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int buttonId) {
 							_db.removeFavorite(_adapter.getItem(position));
@@ -93,6 +95,7 @@ public class MainActivity extends ListActivity {
 						public void onClick(DialogInterface dialog, int buttonId) {
 						}
 					});
+
 					dialog.setButton(DialogInterface.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int buttonId) {
 							_db.setFavorite(_adapter.getItem(position));
@@ -105,6 +108,7 @@ public class MainActivity extends ListActivity {
 				return true;
 			}
 		});
+
 		((ImageButton) findViewById(R.id.btnClearTxtSearch)).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -115,6 +119,7 @@ public class MainActivity extends ListActivity {
 				imm.showSoftInput(txtSearch, InputMethodManager.SHOW_IMPLICIT);
 			}
 		});
+
 		((EditText) findViewById(R.id.txtSearch)).requestFocus();
 		final EditText filter = (EditText) findViewById(R.id.txtSearch);
 		filter.addTextChangedListener(new TextWatcher() {

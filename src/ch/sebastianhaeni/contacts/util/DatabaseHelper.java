@@ -150,14 +150,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	private String getDbPath() {
+		File externalFilesDir = myContext.getExternalFilesDir(null);
+
+		if (externalFilesDir == null) {
+			Log.e("CONTACTS", "No external storage device found!");
+			AlertDialog.Builder builder = new AlertDialog.Builder(myContext);
+			builder.setTitle("Database not found!").setMessage("External storage is required to use this app.").setCancelable(false)
+					.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int buttonId) {
+							android.os.Process.killProcess(android.os.Process.myPid());
+						}
+					}).create().show();
+
+			return null;
+		}
+
 		String path = myContext.getExternalFilesDir(null).getAbsolutePath() + File.separator + DB_NAME;
 		File file = new File(path);
 		if (!file.exists()) {
 			Log.e("CONTACTS", "Database not found where expected: " + path);
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(myContext);
-			builder.setTitle("Database not found!").setMessage("Please copy database manually to this location:\n" + path).setCancelable(false)
-					.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+			builder.setTitle("Database not found!").setMessage("Please copy database manually to this location:\n" + path)
+					.setCancelable(false).setNeutralButton("OK", new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int buttonId) {
 							android.os.Process.killProcess(android.os.Process.myPid());
 						}
@@ -178,7 +193,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-
+		Log.i("CONTACTS", "Database onCreate called");
 	}
 
 	@Override
@@ -209,8 +224,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		List<Person> persons = new ArrayList<Person>();
 
 		if (string.length() >= 3) {
-			Cursor cur = myDataBase.rawQuery("SELECT * FROM employee WHERE employee match ? ORDER BY firstname, lastname LIMIT 100", new String[] { "*"
-					+ string + "*" });
+			Cursor cur = myDataBase.rawQuery("SELECT * FROM employee WHERE employee match ? ORDER BY firstname, lastname LIMIT 100",
+					new String[] { string + "*" });
 
 			while (cur.moveToNext()) {
 				persons.add(getPerson(cur));
@@ -221,10 +236,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	private Person getPerson(Cursor cur) {
-		return new Person(cur.getString(0), cur.getString(1), cur.getString(2), cur.getString(3), cur.getString(4), cur.getString(5), cur.getString(6),
-				cur.getString(7), cur.getString(8), cur.getString(9), cur.getString(10), cur.getString(11), 1 == cur.getInt(12), 1 == cur.getInt(13),
-				cur.getString(14), cur.getString(15), cur.getString(16), cur.getString(17), cur.getString(18), cur.getString(19), cur.getString(20),
-				cur.getString(21), cur.getString(22));
+		return new Person(cur.getString(0), cur.getString(1), cur.getString(2), cur.getString(3), cur.getString(4), cur.getString(5),
+				cur.getString(6), cur.getString(7), cur.getString(8), cur.getString(9), cur.getString(10), cur.getString(11),
+				1 == cur.getInt(12), 1 == cur.getInt(13), cur.getString(14), cur.getString(15), cur.getString(16), cur.getString(17),
+				cur.getString(18), cur.getString(19), cur.getString(20), cur.getString(21), cur.getString(22));
 	}
 
 	public Person getEmployee(String personId) {
@@ -241,8 +256,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public Person getEmployeeByNumber(String incomingNumber) {
 		Log.i("CONTACTS", "Looking up " + incomingNumber);
-		Cursor cur = myDataBase.rawQuery("SELECT * FROM employee WHERE replace(phone, ' ', '') LIKE ? OR replace(mobile_phone, ' ', '') LIKE ?", new String[] {
-				incomingNumber, incomingNumber });
+		Cursor cur = myDataBase.rawQuery(
+				"SELECT * FROM employee WHERE replace(phone, ' ', '') LIKE ? OR replace(mobile_phone, ' ', '') LIKE ?", new String[] {
+						incomingNumber, incomingNumber });
 
 		if (cur.getCount() == 0) {
 			return null;
@@ -255,7 +271,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	public List<Person> getFavorites() {
-		Cursor cur = myDataBase.rawQuery("SELECT * FROM employee INNER JOIN favorite ON employee.idUser = favorite.idUser ORDER BY idFavorite DESC LIMIT 50",
+		Cursor cur = myDataBase.rawQuery(
+				"SELECT * FROM employee INNER JOIN favorite ON employee.idUser = favorite.idUser ORDER BY idFavorite DESC LIMIT 50",
 				new String[] {});
 
 		List<Person> persons = new ArrayList<Person>();
